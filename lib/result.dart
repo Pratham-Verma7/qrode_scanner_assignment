@@ -4,9 +4,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import 'main.dart';
 
+// Stateless widget to display the result of the QR scan
 class QRResult extends StatelessWidget {
-  final String code;
-  final Function() closeScreen;
+  final String code; // The scanned QR code value
+  final Function() closeScreen; // Function to reset scan completion status
 
   const QRResult({
     super.key,
@@ -17,22 +18,24 @@ class QRResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar at the top of the screen
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent, // Transparent AppBar
         leading: IconButton(
           onPressed: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return QRScanner();
-                  },
-                ));
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return QRScanner(); // Navigates back to the QR scanner screen
+                },
+              ),
+            );
           },
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black,
+          icon: Icon(Icons.arrow_back), // Back arrow icon
+          color: Colors.black, // Icon color
         ),
-        centerTitle: true,
+        centerTitle: true, // Center the title in the AppBar
         title: Text(
           "Scanned Result",
           style: TextStyle(
@@ -42,18 +45,20 @@ class QRResult extends StatelessWidget {
           ),
         ),
       ),
+      // Main content of the screen
       body: Padding(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.all(30), // Padding around the content
         child: Column(
           children: [
             SizedBox(
-              height: 80,
+              height: 80, // Space between the AppBar and the QR image
             ),
             QrImageView(
-              data: "",
-              size: 300,
-              version: QrVersions.auto,
+              data: "", // Data to be encoded in the QR code (empty in this case)
+              size: 300, // Size of the QR image
+              version: QrVersions.auto, // Automatically determine the QR version
             ),
+            // Title text for the QR image
             Text(
               "Scanned QR",
               style: TextStyle(
@@ -63,28 +68,30 @@ class QRResult extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 10, // Space between the title and the scanned code
             ),
+            // Display the scanned QR code value
             Text(
               code,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.center, // Center align the text
               style: TextStyle(
                   color: Colors.black87,
                   fontSize: 20
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 20, // Space between the code and the button
             ),
+            // Copy button to copy the scanned code to clipboard
             SizedBox(
-              width: MediaQuery.of(context).size.width - 150,
-              height: 60,
+              width: MediaQuery.of(context).size.width - 150, // Button width
+              height: 60, // Button height
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber.shade900
+                      backgroundColor: Colors.amber.shade900 // Button color
                   ),
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: code));
+                    Clipboard.setData(ClipboardData(text: code)); // Copy code to clipboard
                   },
                   child: Text(
                     "Copy",
